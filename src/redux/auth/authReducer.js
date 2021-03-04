@@ -1,4 +1,5 @@
 import TRY_lOGIN from "./authTypes";
+//import { useLazyQuery, gql } from '@apollo/client';
 
 const initialState = {
   token: 'no token exist'
@@ -9,7 +10,7 @@ const authReducer = (state = initialState, {type, payload}) => {
     case TRY_lOGIN:
       return {
         ...state,
-        token: 'new token'
+        token: `${payload.email}:${payload.password}`
       }
     default: return state;
   }

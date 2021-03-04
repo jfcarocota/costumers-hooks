@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { useLazyQuery, gql } from '@apollo/client'
 import {
 	makeStyles,
@@ -12,9 +12,9 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 import { tryLogin } from '../redux';
-import {connect} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,6 +53,9 @@ const LoginForm = props => {
 	const [password, setPassword] = useState('');
 	const [token, setToken] = useState('');
 	const [loginError, setLoginError] = useState(false);
+
+	const sessionToken = useSelector(({auth}) => auth.token);
+	const dispatch = useDispatch();
 
 	const APP_KEY = 'CostumersApp.session';
 	const onEmailChange = e => {
@@ -152,27 +155,15 @@ const LoginForm = props => {
 						variant="outlined"
 						color="default"
 						className={classes.submit}
-						onClick={props.tryLogin}
+						onClick={()=> dispatch(tryLogin(email, password))}
 					>
 						Iniciar sesión
             </Button>
-						<div>{props.token}</div>
+						<div>{sessionToken}</div>
 				</form>
 			</div>
 		</Container>
 	)
 }
 
-const mapStateToProps = state =>{
-	return {
-		token: state.token
-	}
-}
-
-const mapDispatchToProps = dispatch =>{
-	return {
-		tryLogin: ()=> dispatch(tryLogin())
-	}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default LoginForm;

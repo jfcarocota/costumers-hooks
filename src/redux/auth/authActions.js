@@ -1,7 +1,11 @@
 import TRY_lOGIN  from "./authTypes";
 
-export const tryLogin = ()=> {
+export const tryLogin = (email = '', password = '')=> {
   return {
-    type: TRY_lOGIN
+    type: TRY_lOGIN,
+    payload:{
+      email,
+      password
+    }
   }
 }
