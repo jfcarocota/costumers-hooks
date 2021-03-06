@@ -1,3 +1,5 @@
-const TRY_lOGIN = 'TRY_lOGIN';
+/*export const FETCH_lOGIN_REQUEST = 'FETCH_lOGIN_REQUEST';
+export const FETCH_lOGIN_SUCESS = 'FETCH_lOGIN_SUCESS';
+export const FETCH_lOGIN_FAILURE = 'FETCH_lOGIN_FAILURE';*/
 
-export default TRY_lOGIN;
+export const TRY_LOGIN = 'TRY_LOGIN';

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLazyQuery, gql } from '@apollo/client'
+import { LOGIN_QUERY } from "../graphql/queries";
 import {
 	makeStyles,
 	TextField,
@@ -37,15 +38,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const LOGIN = gql`
-    query($email:String!, $password:String!){
-        login(email: $email, password: $password){
-            token
-        }
-    }
-`;
-
-const LoginForm = props => {
+const LoginForm = () => {
 
 	const classes = useStyles();
 
@@ -58,18 +51,15 @@ const LoginForm = props => {
 	const dispatch = useDispatch();
 
 	const APP_KEY = 'CostumersApp.session';
-	const onEmailChange = e => {
-		setEmail(e.target.value);
-	}
+	const onEmailChange = e => setEmail(e.target.value);
 
-	const onPasswordChange = e => {
-		setPassword(e.target.value);
-	}
+	const onPasswordChange = e => setPassword(e.target.value);
 
-	const [checkLogin, { loading, data, error }] = useLazyQuery(LOGIN, {
+	const [checkLogin, { loading, data, error }] = useLazyQuery(LOGIN_QUERY, {
 		variables: { email, password },
 		onCompleted: () => {
 			if (data?.login?.token) {
+				dispatch(tryLogin(data.login.token));
 				setToken(data.login.token);
 			} else {
 				setLoginError(true);
@@ -155,7 +145,7 @@ const LoginForm = props => {
 						variant="outlined"
 						color="default"
 						className={classes.submit}
-						onClick={()=> dispatch(tryLogin(email, password))}
+						onClick={checkLogin}
 					>
 						Iniciar sesión
             </Button>
