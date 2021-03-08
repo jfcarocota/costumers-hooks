@@ -68,7 +68,7 @@ export const fetchLogin = (email, password)=> {
   }
 */
 
-import { LOGIN_ERROR, LOGIN_SUCESS } from "./authTypes";
+import { LOGOUT, LOGIN_SUCESS } from "./authTypes";
 import jwt from 'jsonwebtoken';
 
 const loginSucess = () => {
@@ -77,9 +77,16 @@ const loginSucess = () => {
   }
 }
 
-const loginError = () => {
+const logout = () => {
   return {
-    type: LOGIN_ERROR
+    type: LOGOUT
+  }
+}
+
+export const tryLogout = ()=>{
+  return dispatch =>{
+    dispatch(logout());
+    localStorage.removeItem(process.env.REACT_APP_APP_KEY);
   }
 }
 
@@ -93,13 +100,10 @@ export const tryLogin = (token) => {
         localStorage.setItem(process.env.REACT_APP_APP_KEY, JSON.stringify({ token: token, user: tokenData.email }));
         //console.log(localStorage.getItem(process.env.REACT_APP_APP_KEY));
         dispatch(loginSucess());
-      }else{
-        dispatch(loginError());
       }
     } catch (error) {
       console.log(error.message);
       localStorage.removeItem(process.env.REACT_APP_APP_KEY);
-      dispatch(loginError());
     }
   }
 }

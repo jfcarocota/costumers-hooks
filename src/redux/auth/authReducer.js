@@ -3,7 +3,7 @@
   FETCH_lOGIN_SUCESS,
   FETCH_lOGIN_FAILURE
 } from "./authTypes"*/
-import {LOGIN_ERROR, LOGIN_SUCESS } from "./authTypes";
+import {LOGOUT, LOGIN_SUCESS } from "./authTypes";
 
 const initialState = {
   authenticated: false
@@ -16,7 +16,7 @@ const authReducer = (state = initialState, {type, payload}) => {
         ...state,
         authenticated: true
       }
-    case LOGIN_ERROR:
+    case LOGOUT:
       return {
         ...state,
         authenticated: false

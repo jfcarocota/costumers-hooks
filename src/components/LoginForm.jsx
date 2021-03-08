@@ -13,9 +13,8 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import jwt from 'jsonwebtoken';
 import { tryLogin } from '../redux';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
