@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLazyQuery, gql } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import { LOGIN_QUERY } from "../graphql/queries";
 import {
 	makeStyles,
@@ -47,7 +47,7 @@ const LoginForm = () => {
 	const [token, setToken] = useState('');
 	const [loginError, setLoginError] = useState(false);
 
-	const sessionToken = useSelector(({auth}) => auth.token);
+	const authenticated = useSelector(({auth}) => auth.authenticated);
 	const dispatch = useDispatch();
 
 	const APP_KEY = 'CostumersApp.session';
@@ -59,23 +59,13 @@ const LoginForm = () => {
 		variables: { email, password },
 		onCompleted: () => {
 			if (data?.login?.token) {
-				dispatch(tryLogin(data.login.token));
 				setToken(data.login.token);
+				dispatch(tryLogin(token));
 			} else {
 				setLoginError(true);
 			}
 		}
 	});
-
-	useEffect(() => {
-		const storedSession = JSON.parse(localStorage.getItem(APP_KEY));
-		if (storedSession) {
-			setToken(storedSession.token);
-			console.log("session exist");
-		} else {
-			console.log('not loged');
-		}
-	}, []);
 
 	useEffect(() => {
 		//console.log(token);
@@ -149,7 +139,7 @@ const LoginForm = () => {
 					>
 						Iniciar sesión
             </Button>
-						<div>{sessionToken}</div>
+						<div>{authenticated & (<div>is loged</div>)}</div>
 				</form>
 			</div>
 		</Container>

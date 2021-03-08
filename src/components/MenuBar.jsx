@@ -37,7 +37,7 @@ const MenuBar = ()=> {
 				<MenuItem onClick={handleClose}>Registrar clientes</MenuItem>
 				<MenuItem onClick={handleClose}>Buscar empleados</MenuItem>
 				<MenuItem onClick={handleClose}>Registrar empleados</MenuItem>
-				<MenuItem onClick={handleClose}>Logout</MenuItem>
+				<MenuItem onClick={handleClose}>Cerrar sesión</MenuItem>
 			</Menu>
 		</>
 	)
