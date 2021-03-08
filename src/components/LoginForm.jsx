@@ -44,13 +44,11 @@ const LoginForm = () => {
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [token, setToken] = useState('');
 	const [loginError, setLoginError] = useState(false);
 
-	const authenticated = useSelector(({auth}) => auth.authenticated);
+	//const authenticated = useSelector(({auth}) => auth.authenticated);
 	const dispatch = useDispatch();
 
-	const APP_KEY = 'CostumersApp.session';
 	const onEmailChange = e => setEmail(e.target.value);
 
 	const onPasswordChange = e => setPassword(e.target.value);
@@ -59,27 +57,27 @@ const LoginForm = () => {
 		variables: { email, password },
 		onCompleted: () => {
 			if (data?.login?.token) {
-				setToken(data.login.token);
-				dispatch(tryLogin(token));
+				//setToken(data.login.token);
+				dispatch(tryLogin(data.login.token));
 			} else {
 				setLoginError(true);
 			}
 		}
 	});
 
-	useEffect(() => {
+	/*useEffect(() => {
 		//console.log(token);
 		try {
-			const tokenData = jwt.verify(token, 'secret');
+			const tokenData = jwt.verify(token, process.env.REACP_APP_TOKEN_KEY);
 			if (tokenData) {
-				localStorage.setItem(APP_KEY, JSON.stringify({ token, user: tokenData.email }));
+				localStorage.setItem(process.env.REACT_APP_APP_KEY, JSON.stringify({ token, user: tokenData.email }));
 			}
 		} catch (error) {
 			console.log(error.message);
-			localStorage.removeItem(APP_KEY);
+			localStorage.removeItem(process.env.REACT_APP_APP_KEY);
 		}
 		return ()=> console.log('component unmounted');
-	}, [token]);
+	}, [token]);*/
 
 	if (loading) return (
 		<Container component="main" maxWidth="xs">
@@ -139,7 +137,6 @@ const LoginForm = () => {
 					>
 						Iniciar sesión
             </Button>
-						<div>{authenticated & (<div>is loged</div>)}</div>
 				</form>
 			</div>
 		</Container>

@@ -49,13 +49,57 @@ export const fetchLogin = (email, password)=> {
   }
 }*/
 
-import { TRY_LOGIN } from "./authTypes";
+/*
+()=> {
+    try {
+      console.log(payload.token);
+      const tokenData = jwt.verify(payload.token, process.env.REACP_APP_TOKEN_KEY);
+      console.log(tokenData);
+      if (tokenData) {
+        localStorage.setItem(process.env.REACT_APP_APP_KEY, JSON.stringify({ token: payload.token, user: tokenData.email }));
+        console.log(localStorage.getItem(process.env.REACT_APP_APP_KEY));
+        return true;
+      }
+    } catch (error) {
+      console.log(error.message);
+      localStorage.removeItem(process.env.REACT_APP_APP_KEY);
+      return false;
+    }
+  }
+*/
+
+import { LOGIN_ERROR, LOGIN_SUCESS } from "./authTypes";
+import jwt from 'jsonwebtoken';
+
+const loginSucess = () => {
+  return {
+    type: LOGIN_SUCESS
+  }
+}
+
+const loginError = () => {
+  return {
+    type: LOGIN_ERROR
+  }
+}
 
 export const tryLogin = (token) => {
-  return {
-    type: TRY_LOGIN,
-    payload: {
-      token
+  return dispatch =>{
+    try {
+      console.log(token);
+      const tokenData = jwt.verify(token, process.env.REACT_APP_TOKEN_KEY);
+      console.log(tokenData);
+      if (tokenData) {
+        localStorage.setItem(process.env.REACT_APP_APP_KEY, JSON.stringify({ token: token, user: tokenData.email }));
+        //console.log(localStorage.getItem(process.env.REACT_APP_APP_KEY));
+        dispatch(loginSucess());
+      }else{
+        dispatch(loginError());
+      }
+    } catch (error) {
+      console.log(error.message);
+      localStorage.removeItem(process.env.REACT_APP_APP_KEY);
+      dispatch(loginError());
     }
   }
 }

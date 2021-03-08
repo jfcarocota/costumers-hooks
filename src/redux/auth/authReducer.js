@@ -3,37 +3,23 @@
   FETCH_lOGIN_SUCESS,
   FETCH_lOGIN_FAILURE
 } from "./authTypes"*/
-import jwt from 'jsonwebtoken';
-import { TRY_LOGIN, LOGIN_ERROR } from "./authTypes";
+import {LOGIN_ERROR, LOGIN_SUCESS } from "./authTypes";
 
 const initialState = {
-  authenticated: false,
-  error:''
+  authenticated: false
 }
 
 const authReducer = (state = initialState, {type, payload}) => {
   switch(type){
-    case TRY_LOGIN:
+    case LOGIN_SUCESS:
       return {
         ...state,
-        authenticated: ()=> {
-          try {
-            const tokenData = jwt.verify(payload.token, 'secret');
-            if (tokenData) {
-              localStorage.setItem(process.env.REACT_APP_APP_KEY, JSON.stringify({ token: payload.token, user: tokenData.email }));
-              return true;
-            }
-          } catch (error) {
-            console.log(error.message);
-            localStorage.removeItem(process.env.REACT_APP_APP_KEY);
-            return false;
-          }
-        }
+        authenticated: true
       }
     case LOGIN_ERROR:
       return {
         ...state,
-        error: payload.error
+        authenticated: false
       }
     default: return state
   }
