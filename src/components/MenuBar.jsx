@@ -6,14 +6,13 @@ import {
 	Menu,
 	Fade
 } from '@material-ui/core';
-import {useSelector, useDispatch} from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { tryLogout } from "../redux";
 
 const MenuBar = ()=> {
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
-	const authenticated = useSelector(({auth}) => auth.authenticated);
 	const dispatch = useDispatch();
 
 	const handleClick = (event) => {
@@ -46,7 +45,7 @@ const MenuBar = ()=> {
 				<MenuItem onClick={handleClose}>Registrar clientes</MenuItem>
 				<MenuItem onClick={handleClose}>Buscar empleados</MenuItem>
 				<MenuItem onClick={handleClose}>Registrar empleados</MenuItem>
-				{authenticated && (<MenuItem onClick={handleLogOut}>Cerrar sesión</MenuItem>)}
+				<MenuItem onClick={handleLogOut}>Cerrar sesión</MenuItem>
 			</Menu>
 		</>
 	)

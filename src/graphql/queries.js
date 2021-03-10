@@ -7,3 +7,16 @@ export const LOGIN_QUERY = gql`
         }
     }
 `;
+
+export const GET_COSTUMERS_OPTIONS = gql`
+    query($fullName: String){
+        costumersSearch(fullName: $fullName){
+            id
+            firstName
+            middleName
+            lastName
+            secondLastName,
+            fullName
+        }
+    }
+`;

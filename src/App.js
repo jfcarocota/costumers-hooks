@@ -1,4 +1,5 @@
 import './App.css';
+import 'semantic-ui-css/semantic.min.css'
 import LoginForm from './components/LoginForm';
 import { ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client';
 import MenuBar from './components/MenuBar';
@@ -40,7 +41,7 @@ const App = ()=> {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <MenuBar/>
+        {authenticated && <MenuBar/>}
         <Switch>
           {!authenticated ?
           <Route path="/" component={LoginForm} /> :

@@ -103,7 +103,7 @@ export const tryLogin = (token) => {
       }
     } catch (error) {
       console.log(error.message);
-      localStorage.removeItem(process.env.REACT_APP_APP_KEY);
+      dispatch(tryLogout());
     }
   }
 }

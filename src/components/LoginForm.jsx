@@ -56,7 +56,6 @@ const LoginForm = () => {
 		variables: { email, password },
 		onCompleted: () => {
 			if (data?.login?.token) {
-				//setToken(data.login.token);
 				dispatch(tryLogin(data.login.token));
 			} else {
 				setLoginError(true);
