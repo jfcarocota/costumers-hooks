@@ -15,6 +15,7 @@ import {
 import {useSelector, useDispatch} from 'react-redux';
 import { useEffect } from "react";
 import { tryLogin } from './redux';
+import CostumerSelectedView from './components/costumers/CostumerSelectedView';
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_API_URL,
@@ -45,7 +46,10 @@ const App = ()=> {
         <Switch>
           {!authenticated ?
           <Route path="/" component={LoginForm} /> :
-          <Route path="/" component={SearchCostumersView} />}
+          <>
+          <Route exact path="/" component={SearchCostumersView} />
+          <Route path="/costumer" component={CostumerSelectedView} />
+          </>}
         </Switch>
       </Router>
     </ApolloProvider>

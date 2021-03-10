@@ -1,7 +1,11 @@
-import { COSTUMERS_TRY_RESULTS } from "./costumersType";
+import {
+  COSTUMERS_TRY_RESULTS,
+  COSTUMERS_SELECT
+} from "./costumersType";
 
 const initialState = {
-  costumersResults: []
+  costumersResults: [],
+  costumerSelected: ''
 }
 
 const costumersReducer = (state = initialState, {type, payload}) => {
@@ -10,6 +14,11 @@ const costumersReducer = (state = initialState, {type, payload}) => {
       return {
         ...state,
         costumersResults: payload.costumersResults
+      }
+    case COSTUMERS_SELECT:
+      return {
+        ...state,
+        costumerSelected: payload.costumerSelected
       }
     default: return state;
   }

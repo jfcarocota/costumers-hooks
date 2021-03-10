@@ -1,36 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Search } from 'semantic-ui-react';
+import { Container, Divider, Search } from 'semantic-ui-react';
 import { GET_COSTUMERS_OPTIONS } from "../../graphql/queries";
 import Button from '@material-ui/core/Button';
 import { useLazyQuery } from "@apollo/client";
 import { useDispatch, useSelector } from "react-redux";
-import { tryCostumersResults } from "../../redux";
+import { tryCostumersResults, costumerSelect } from "../../redux";
+import { useHistory } from "react-router-dom";
 
 const SearchCostumersView = ()=> {
 
-  const dispath = useDispatch();
-
+  const dispatch = useDispatch();
+  const history = useHistory();
   const costumersResults = useSelector(({costumers}) => costumers.costumersResults);
+  //const costumerSelected = useSelector(({costumers}) => costumers.costumerSelected);
+
   const [fullName, setFullName] = useState('');
 
   const resultSelect = (e, data) => {
-
+    dispatch(costumerSelect(data.result.id));
+    history.push('/costumer');
   }
 
-  const searchChange = (e, {value}) => {
-    setFullName(value);
-  }
+  const searchChange = (e, {value}) => setFullName(value);
 
   const [searchCostumer, { loading, data, error }] = useLazyQuery(GET_COSTUMERS_OPTIONS, {
 		variables: { fullName },
 		onCompleted: () => {
       console.log(data);
 			if (data?.costumersSearch) {
-        dispath(tryCostumersResults(data.costumersSearch.map(costumer => {
+        dispatch(tryCostumersResults(data.costumersSearch.map(costumer => {
           return {title: costumer.fullName, id: costumer.id}
         })));
-				//setToken(data.login.token);
-				//dispatch(tryLogin(data.login.token));
 			}
 		},
     onError: ()=> {
@@ -38,31 +38,26 @@ const SearchCostumersView = ()=> {
     }
 	});
 
-  //useEffect(()=> searchCostumer(), [searchCostumer]);
-
   useEffect(()=> {
-    console.log(fullName);
+    //console.log(fullName);
     searchCostumer();
-    console.log(costumersResults);
-  }, [fullName, costumersResults, searchCostumer]);
+    //console.log(costumersResults);
+  }, [fullName, searchCostumer]);
 
   return (
     <Container textAlign='center'>
       <Search
+      fluid
       size='massive'
       style={{paddingTop: window.innerHeight / 4 }}
       onSearchChange={searchChange}
       results={costumersResults}
       value={fullName}
       loading={loading}
-        /*loadingfullName={loading}
-        onResultSelect={(e, data) =>
-          dispatch({ type: 'UPDATE_SELECTION', selection: data.result.title })
-        }
-        onSearchChange={handleSearchChange}
-        results={results}
-        value={value}*/
+      placeholder='nombre/No.ID/paquetería'
+      onResultSelect={resultSelect}
       />
+      <Divider hidden/>
       <Button variant="outlined" color="primary">
         Buscar
       </Button>
