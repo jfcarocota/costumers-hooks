@@ -14,17 +14,17 @@ const SearchCostumersView = ()=> {
   const costumersResults = useSelector(({costumers}) => costumers.costumersResults);
   //const costumerSelected = useSelector(({costumers}) => costumers.costumerSelected);
 
-  const [fullName, setFullName] = useState('');
+  const [filter, setFilter] = useState('');
 
   const resultSelect = (e, data) => {
     dispatch(costumerSelect(data.result.id));
     history.push('/costumer');
   }
 
-  const searchChange = (e, {value}) => setFullName(value);
+  const searchChange = (e, {value}) => setFilter(value);
 
   const [searchCostumer, { loading, data, error }] = useLazyQuery(GET_COSTUMERS_OPTIONS, {
-		variables: { fullName },
+		variables: { filter },
 		onCompleted: () => {
       console.log(data);
 			if (data?.costumersSearch) {
@@ -42,7 +42,7 @@ const SearchCostumersView = ()=> {
     //console.log(fullName);
     searchCostumer();
     //console.log(costumersResults);
-  }, [fullName, searchCostumer]);
+  }, [filter, searchCostumer]);
 
   return (
     <Container textAlign='center'>
@@ -52,7 +52,7 @@ const SearchCostumersView = ()=> {
       style={{paddingTop: window.innerHeight / 4 }}
       onSearchChange={searchChange}
       results={costumersResults}
-      value={fullName}
+      value={filter}
       loading={loading}
       placeholder='nombre/No.ID/paquetería'
       onResultSelect={resultSelect}
