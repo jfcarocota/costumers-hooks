@@ -15,6 +15,12 @@ export const GET_COSTUMERS_OPTIONS = gql`
       fullName
       phonNumber
       email
+      packages{
+        account
+        parcel{
+          name
+        }
+      }
     }
   }
 `;

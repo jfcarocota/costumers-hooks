@@ -29,7 +29,14 @@ const SearchCostumersView = ()=> {
       console.log(data);
 			if (data?.costumersSearch) {
         dispatch(tryCostumersResults(data.costumersSearch.map(costumer => {
-          return {title: costumer.fullName, id: costumer.id}
+          const {fullName, id, phonNumber, email, packages} = costumer;
+          const accounts = packages.map(element => `${element.parcel.name}: ${element.account}`);
+          console.log(accounts);
+          return {
+            title: fullName,
+            description: `${email}, ${phonNumber}, (${accounts.join()})`,
+            id: id
+          }
         })));
 			}
 		},
@@ -54,7 +61,7 @@ const SearchCostumersView = ()=> {
       results={costumersResults}
       value={filter}
       loading={loading}
-      placeholder='nombre/No.ID/paquetería'
+      placeholder='nombre, correo, teléfono ...'
       onResultSelect={resultSelect}
       />
       <Divider hidden/>
