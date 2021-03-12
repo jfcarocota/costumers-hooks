@@ -45,14 +45,13 @@ const LoginForm = () => {
 	const [password, setPassword] = useState('');
 	const [loginError, setLoginError] = useState(false);
 
-	//const authenticated = useSelector(({auth}) => auth.authenticated);
 	const dispatch = useDispatch();
 
 	const onEmailChange = ({target}) => setEmail(target.value);
 
 	const onPasswordChange = ({target}) => setPassword(target.value);
 
-	const [checkLogin, { loading, data, error }] = useLazyQuery(LOGIN_QUERY, {
+	/*const [checkLogin, { loading, data, error }] = useLazyQuery(LOGIN_QUERY, {
 		variables: { email, password },
 		onCompleted: () => {
 			if (data?.login?.token) {
@@ -64,7 +63,9 @@ const LoginForm = () => {
 			}
 		},
 		onError: ()=> console.log(error)
-	});
+	});*/
+
+	const checkLogin = ()=> dispatch(fetchLogin(email, password));
 
 	/*if (loading) return (
 		<Container component="main" maxWidth="xs">

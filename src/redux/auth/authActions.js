@@ -122,12 +122,9 @@ const fetchLoginRequest = ()=> {
   }
 }
 
-const fetchLoginSucess = (token)=> {
+const fetchLoginSucess = ()=> {
   return {
-    type: FETCH_lOGIN_SUCESS,
-    payload: {
-      token
-    }
+    type: FETCH_lOGIN_SUCESS
   }
 }
 
@@ -148,24 +145,26 @@ export const fetchLogin = (email, password)=> {
     .then(({data}) =>{
       //dispatch(fetchLoginSucess());
       console.log(data);
+      if(data?.data?.login?.token){
+        console.log(data.data.login.token)
+        try {
+          //console.log(token);
+          const tokenData = jwt.verify(data.data.login.token, process.env.REACT_APP_TOKEN_KEY);
+          //console.log(tokenData);
+          if (tokenData) {
+            localStorage.setItem(process.env.REACT_APP_APP_KEY, JSON.stringify({ token: data.data.login.token, user: tokenData.email }));
+            //console.log(localStorage.getItem(process.env.REACT_APP_APP_KEY));
+            dispatch(fetchLoginSucess());
+          }
+        } catch (error) {
+          console.log(error.message);
+          dispatch(tryLogout());
+        }
+      }
     })
     .catch(error =>{
       dispatch(fetchLoginFailure(error));
       console.log(error);
     });
-    /*useLazyQuery(LOGIN_QUERY, {
-      variables: { email, password },
-      onCompleted: (data) => {
-        if (data?.login?.token) {
-          const {token} = data.login;
-          dispatch(fetchLoginSucess(token));
-        } else {
-          dispatch(fetchLoginFailure('Credenciales invalidas'));
-        }
-      },
-      onError: error =>{
-        dispatch(fetchLoginFailure(error));
-      }
-    });*/
   }
 }
