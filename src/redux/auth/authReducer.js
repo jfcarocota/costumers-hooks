@@ -9,7 +9,7 @@ import {
 const initialState = {
   authenticated: false,
   loading: false,
-  error: ''
+  error: false
 }
 
 const authReducer = (state = initialState, {type, payload}) => {
@@ -33,49 +33,15 @@ const authReducer = (state = initialState, {type, payload}) => {
         return{
           loading: false,
           authenticated: true,
-          error: ''
+          error: false
         }
       case FETCH_lOGIN_FAILURE:
         return {
           loading: false,
-          error: payload.error
+          error: true
         }
     default: return state
   }
 }
-
-/*const initialState = {
-  token: 'no token exist'
-}*/
-
-/*const initialState = {
-  loading: false,
-  token: '',
-  error: ''
-}
-
-const authReducer = (state = initialState, {type, payload}) => {
-
-  switch(type){
-    case FETCH_lOGIN_REQUEST:
-      return {
-        ...state,
-        loading: true
-      }
-    case FETCH_lOGIN_SUCESS:
-      return{
-        loading: false,
-        token: payload.token,
-        error: ''
-      }
-    case FETCH_lOGIN_FAILURE:
-      return {
-        loading: false,
-        token: '',
-        error: payload
-      }
-    default: return state;
-  }
-}*/
 
 export default authReducer;

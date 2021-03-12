@@ -1,6 +1,4 @@
-import React, { useState, useCallback } from 'react';
-import { useLazyQuery } from '@apollo/client'
-import { LOGIN_QUERY } from "../graphql/queries";
+import React, { useState } from 'react';
 import {
 	makeStyles,
 	TextField,
@@ -13,8 +11,8 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { tryLogin, fetchLogin } from '../redux';
-import {useDispatch} from 'react-redux';
+import { fetchLogin } from '../redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -43,27 +41,13 @@ const LoginForm = () => {
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [loginError, setLoginError] = useState(false);
 
 	const dispatch = useDispatch();
+	const loginError = useSelector(({auth}) => auth.error)
 
 	const onEmailChange = ({target}) => setEmail(target.value);
 
 	const onPasswordChange = ({target}) => setPassword(target.value);
-
-	/*const [checkLogin, { loading, data, error }] = useLazyQuery(LOGIN_QUERY, {
-		variables: { email, password },
-		onCompleted: () => {
-			if (data?.login?.token) {
-				dispatch(tryLogin(data.login.token));
-				dispatch(fetchLogin(email, password));
-			} else {
-				console.log('error');
-				setLoginError(true);
-			}
-		},
-		onError: ()=> console.log(error)
-	});*/
 
 	const checkLogin = ()=> dispatch(fetchLogin(email, password));
 

@@ -1,89 +1,12 @@
-/*import {
-  FETCH_lOGIN_REQUEST,
-  FETCH_lOGIN_SUCESS,
-  FETCH_lOGIN_FAILURE
-} from "./authTypes";
-
-import { useLazyQuery } from '@apollo/client';
-import { LOGIN_QUERY } from "../../graphql/queries";
-
-const fetchLoginRequest = ()=> {
-  return {
-    type: FETCH_lOGIN_REQUEST
-  }
-}
-
-const fetchLoginSucess = (token)=> {
-  return {
-    type: FETCH_lOGIN_SUCESS,
-    payload: {
-      token
-    }
-  }
-}
-
-const fetchLoginFailure = error => {
-  return {
-    type: FETCH_lOGIN_FAILURE,
-    payload: error
-  }
-}
-
-export const fetchLogin = (email, password)=> {
-  return dispatch =>{
-    dispatch(fetchLoginRequest);
-    useLazyQuery(LOGIN_QUERY, {
-      variables: { email, password },
-      onCompleted: (data) => {
-        if (data?.login?.token) {
-          const {token} = data.login;
-          dispatch(fetchLoginSucess(token));
-        } else {
-          dispatch(fetchLoginFailure('Credenciales invalidas'));
-        }
-      },
-      onError: error =>{
-        dispatch(fetchLoginFailure(error));
-      }
-    });
-  }
-}*/
-
-/*
-()=> {
-    try {
-      console.log(payload.token);
-      const tokenData = jwt.verify(payload.token, process.env.REACP_APP_TOKEN_KEY);
-      console.log(tokenData);
-      if (tokenData) {
-        localStorage.setItem(process.env.REACT_APP_APP_KEY, JSON.stringify({ token: payload.token, user: tokenData.email }));
-        console.log(localStorage.getItem(process.env.REACT_APP_APP_KEY));
-        return true;
-      }
-    } catch (error) {
-      console.log(error.message);
-      localStorage.removeItem(process.env.REACT_APP_APP_KEY);
-      return false;
-    }
-  }
-*/
-
 import {
   FETCH_lOGIN_REQUEST,
   FETCH_lOGIN_SUCESS,
   FETCH_lOGIN_FAILURE,
-  LOGOUT,
-  LOGIN_SUCESS
+  LOGOUT
 } from "./authTypes";
 import jwt from 'jsonwebtoken';
 import axios from "axios";
-import { LOGIN_QUERY, AUTHENTICATE } from "../../graphql/queries";
-
-const loginSucess = () => {
-  return {
-    type: LOGIN_SUCESS
-  }
-}
+import { AUTHENTICATE } from "../../graphql/queries";
 
 const logout = () => {
   return {
@@ -107,7 +30,7 @@ export const tryLogin = (token) => {
       if (tokenData) {
         localStorage.setItem(process.env.REACT_APP_APP_KEY, JSON.stringify({ token: token, user: tokenData.email }));
         //console.log(localStorage.getItem(process.env.REACT_APP_APP_KEY));
-        dispatch(loginSucess());
+        dispatch(fetchLoginSucess());
       }
     } catch (error) {
       console.log(error.message);
@@ -128,10 +51,9 @@ const fetchLoginSucess = ()=> {
   }
 }
 
-const fetchLoginFailure = error => {
+const fetchLoginFailure = () => {
   return {
-    type: FETCH_lOGIN_FAILURE,
-    payload: error
+    type: FETCH_lOGIN_FAILURE
   }
 }
 
@@ -155,11 +77,16 @@ export const fetchLogin = (email, password)=> {
             localStorage.setItem(process.env.REACT_APP_APP_KEY, JSON.stringify({ token: data.data.login.token, user: tokenData.email }));
             //console.log(localStorage.getItem(process.env.REACT_APP_APP_KEY));
             dispatch(fetchLoginSucess());
+          }else{
+            dispatch(fetchLoginFailure());
           }
         } catch (error) {
           console.log(error.message);
+          dispatch(fetchLoginFailure(error));
           dispatch(tryLogout());
         }
+      }else{
+        dispatch(fetchLoginFailure());
       }
     })
     .catch(error =>{
