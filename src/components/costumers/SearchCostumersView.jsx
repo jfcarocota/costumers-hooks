@@ -31,7 +31,6 @@ const SearchCostumersView = ()=> {
         dispatch(tryCostumersResults(data.costumersSearch.map(costumer => {
           const {fullName, id, phonNumber, email, packages} = costumer;
           const accounts = packages.map(element => `${element.parcel.name}: ${element.account}`);
-          console.log(accounts);
           return {
             title: fullName,
             description: `${email}, ${phonNumber}, (${accounts.join()})`,
@@ -46,9 +45,7 @@ const SearchCostumersView = ()=> {
 	});
 
   useEffect(()=> {
-    //console.log(fullName);
     searchCostumer();
-    //console.log(costumersResults);
   }, [filter, searchCostumer]);
 
   return (

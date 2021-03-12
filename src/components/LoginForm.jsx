@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useLazyQuery } from '@apollo/client'
 import { LOGIN_QUERY } from "../graphql/queries";
 import {
@@ -13,7 +13,7 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { tryLogin } from '../redux';
+import { tryLogin, fetchLogin } from '../redux';
 import {useDispatch} from 'react-redux';
 
 
@@ -48,44 +48,29 @@ const LoginForm = () => {
 	//const authenticated = useSelector(({auth}) => auth.authenticated);
 	const dispatch = useDispatch();
 
-	const onEmailChange = e => setEmail(e.target.value);
+	const onEmailChange = ({target}) => setEmail(target.value);
 
-	const onPasswordChange = e => setPassword(e.target.value);
+	const onPasswordChange = ({target}) => setPassword(target.value);
 
 	const [checkLogin, { loading, data, error }] = useLazyQuery(LOGIN_QUERY, {
 		variables: { email, password },
 		onCompleted: () => {
 			if (data?.login?.token) {
 				dispatch(tryLogin(data.login.token));
+				dispatch(fetchLogin(email, password));
 			} else {
+				console.log('error');
 				setLoginError(true);
 			}
-		}
+		},
+		onError: ()=> console.log(error)
 	});
 
-	/*useEffect(() => {
-		//console.log(token);
-		try {
-			const tokenData = jwt.verify(token, process.env.REACP_APP_TOKEN_KEY);
-			if (tokenData) {
-				localStorage.setItem(process.env.REACT_APP_APP_KEY, JSON.stringify({ token, user: tokenData.email }));
-			}
-		} catch (error) {
-			console.log(error.message);
-			localStorage.removeItem(process.env.REACT_APP_APP_KEY);
-		}
-		return ()=> console.log('component unmounted');
-	}, [token]);*/
-
-	if (loading) return (
+	/*if (loading) return (
 		<Container component="main" maxWidth="xs">
 			<CircularProgress />
 		</Container>
-	);
-
-	if (error) {
-		console.log(error.message);
-	}
+	);*/
 
 	return (
 		<Container component="main" maxWidth="xs">

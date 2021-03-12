@@ -1,12 +1,15 @@
-/*import {
+import {
   FETCH_lOGIN_REQUEST,
   FETCH_lOGIN_SUCESS,
-  FETCH_lOGIN_FAILURE
-} from "./authTypes"*/
-import {LOGOUT, LOGIN_SUCESS } from "./authTypes";
+  FETCH_lOGIN_FAILURE,
+  LOGIN_SUCESS,
+  LOGOUT
+} from "./authTypes"
 
 const initialState = {
-  authenticated: false
+  authenticated: false,
+  loading: false,
+  error: ''
 }
 
 const authReducer = (state = initialState, {type, payload}) => {
@@ -21,6 +24,22 @@ const authReducer = (state = initialState, {type, payload}) => {
         ...state,
         authenticated: false
       }
+      case FETCH_lOGIN_REQUEST:
+        return {
+          ...state,
+          loading: true
+        }
+      case FETCH_lOGIN_SUCESS:
+        return{
+          loading: false,
+          authenticated: true,
+          error: ''
+        }
+      case FETCH_lOGIN_FAILURE:
+        return {
+          loading: false,
+          error: payload.error
+        }
     default: return state
   }
 }
@@ -49,12 +68,12 @@ const authReducer = (state = initialState, {type, payload}) => {
         token: payload.token,
         error: ''
       }
-      case FETCH_lOGIN_FAILURE:
-        return {
-          loading: false,
-          token: '',
-          error: payload
-        }
+    case FETCH_lOGIN_FAILURE:
+      return {
+        loading: false,
+        token: '',
+        error: payload
+      }
     default: return state;
   }
 }*/

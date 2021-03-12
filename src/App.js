@@ -29,13 +29,12 @@ const App = ()=> {
 
   useEffect(() => {
 		const storedSession = JSON.parse(localStorage.getItem(process.env.REACT_APP_APP_KEY));
-    console.log(storedSession);
+    //console.log(storedSession);
 		if (storedSession) {
       dispatch(tryLogin(storedSession.token));
-			//setToken(storedSession.token);
-			console.log("session exist");
+			//console.log("session exist");
 		} else {
-			console.log('not loged');
+			//console.log('not loged');
 		}
 	}, [dispatch]);
 
