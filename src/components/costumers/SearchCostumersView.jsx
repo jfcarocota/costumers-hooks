@@ -23,7 +23,7 @@ const SearchCostumersView = ()=> {
 
   const searchChange = (e, {value}) => setFilter(value);
 
-  const [searchCostumer, { loading, data, error }] = useLazyQuery(GET_COSTUMERS_OPTIONS, {
+  /*const [searchCostumer, { loading, data, error }] = useLazyQuery(GET_COSTUMERS_OPTIONS, {
 		variables: { filter },
 		onCompleted: () => {
       //console.log(data);
@@ -43,11 +43,11 @@ const SearchCostumersView = ()=> {
     onError: ()=> {
       //console.log(error);
     }
-	});
+	});*/
 
   useEffect(()=> {
-    searchCostumer();
-  }, [filter, searchCostumer]);
+    dispatch(fetchCostumersSearch(filter));
+  }, [filter, dispatch]);
 
   return (
     <Container textAlign='center'>
@@ -58,7 +58,7 @@ const SearchCostumersView = ()=> {
       onSearchChange={searchChange}
       results={costumersResults}
       value={filter}
-      loading={loading}
+      //loading={loading}
       placeholder='nombre, correo, teléfono ...'
       onResultSelect={resultSelect}
       />

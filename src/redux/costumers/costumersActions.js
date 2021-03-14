@@ -32,6 +32,15 @@ const costumerFetchResults = ()=> {
     type: COSTUMERS_FETCH_RESULTS
   }
 }
+const costumerFetchSucess = (costumersResults)=> {
+  return {
+    type: COSTUMERS_FETCH_SUCESS,
+    payload:{
+      loading: false,
+      costumersResults
+    }
+  }
+}
 
 export const fetchCostumersSearch = (filter) => {
   return dispatch =>{
@@ -42,7 +51,18 @@ export const fetchCostumersSearch = (filter) => {
         filter
       }
     })
-    .then(({data}) => console.log(data))
+    .then(({data}) => {
+      dispatch(costumerFetchSucess(data.data.costumersSearch.map(costumer =>{
+        const {fullName, id, phonNumber, email, packages} = costumer;
+        const accounts = packages.map(element => `${element.parcel.name}: ${element.account}`);
+        return {
+          title: fullName,
+          description: `${email}, ${phonNumber}, (${accounts.join()})`,
+          id: id
+        }
+      })));
+      //console.log(data.data.costumersSearch)
+    })
     .catch(error => console.log(error));
   }
 }
