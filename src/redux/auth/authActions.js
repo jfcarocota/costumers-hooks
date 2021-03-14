@@ -82,7 +82,6 @@ export const fetchLogin = (email, password)=> {
           }
         } catch (error) {
           console.log(error.message);
-          dispatch(fetchLoginFailure(error));
           dispatch(tryLogout());
         }
       }else{

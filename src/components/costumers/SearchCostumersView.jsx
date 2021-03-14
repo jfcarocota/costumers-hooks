@@ -4,7 +4,7 @@ import { GET_COSTUMERS_OPTIONS } from "../../graphql/queries";
 import Button from '@material-ui/core/Button';
 import { useLazyQuery } from "@apollo/client";
 import { useDispatch, useSelector } from "react-redux";
-import { tryCostumersResults, costumerSelect } from "../../redux";
+import { tryCostumersResults, costumerSelect, fetchCostumersSearch } from "../../redux";
 import { useHistory } from "react-router-dom";
 
 const SearchCostumersView = ()=> {
@@ -26,8 +26,9 @@ const SearchCostumersView = ()=> {
   const [searchCostumer, { loading, data, error }] = useLazyQuery(GET_COSTUMERS_OPTIONS, {
 		variables: { filter },
 		onCompleted: () => {
-      console.log(data);
+      //console.log(data);
 			if (data?.costumersSearch) {
+        dispatch(fetchCostumersSearch(filter));
         dispatch(tryCostumersResults(data.costumersSearch.map(costumer => {
           const {fullName, id, phonNumber, email, packages} = costumer;
           const accounts = packages.map(element => `${element.parcel.name}: ${element.account}`);
@@ -40,7 +41,7 @@ const SearchCostumersView = ()=> {
 			}
 		},
     onError: ()=> {
-      console.log(error);
+      //console.log(error);
     }
 	});
 

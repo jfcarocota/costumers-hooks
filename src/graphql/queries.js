@@ -8,6 +8,23 @@ export const AUTHENTICATE =`
   }
 `;
 
+export const GET_COSTUMERS_SEARCH = `
+query($filter: String){
+  costumersSearch(filter: $filter){
+    id
+    fullName
+    phonNumber
+    email
+    packages{
+      account
+      parcel{
+        name
+      }
+    }
+  }
+}
+`;
+
 export const LOGIN_QUERY = gql`
   query($email:String!, $password:String!){
     login(email: $email, password: $password){
