@@ -12,7 +12,6 @@ const SearchCostumersView = ()=> {
   const dispatch = useDispatch();
   const history = useHistory();
   const costumersResults = useSelector(({costumers}) => costumers.costumersResults);
-  //const costumerSelected = useSelector(({costumers}) => costumers.costumerSelected);
 
   const [filter, setFilter] = useState('');
 
@@ -22,28 +21,6 @@ const SearchCostumersView = ()=> {
   }
 
   const searchChange = (e, {value}) => setFilter(value);
-
-  /*const [searchCostumer, { loading, data, error }] = useLazyQuery(GET_COSTUMERS_OPTIONS, {
-		variables: { filter },
-		onCompleted: () => {
-      //console.log(data);
-			if (data?.costumersSearch) {
-        dispatch(fetchCostumersSearch(filter));
-        dispatch(tryCostumersResults(data.costumersSearch.map(costumer => {
-          const {fullName, id, phonNumber, email, packages} = costumer;
-          const accounts = packages.map(element => `${element.parcel.name}: ${element.account}`);
-          return {
-            title: fullName,
-            description: `${email}, ${phonNumber}, (${accounts.join()})`,
-            id: id
-          }
-        })));
-			}
-		},
-    onError: ()=> {
-      //console.log(error);
-    }
-	});*/
 
   useEffect(()=> {
     dispatch(fetchCostumersSearch(filter));

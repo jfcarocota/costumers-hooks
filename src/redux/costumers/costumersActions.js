@@ -9,15 +9,6 @@ import axios from "axios";
 
 import { GET_COSTUMERS_SEARCH } from "../../graphql/queries";
 
-export const tryCostumersResults = (costumersResults)=> {
-  return {
-    type: COSTUMERS_TRY_RESULTS,
-    payload: {
-      costumersResults
-    }
-  }
-}
-
 export const costumerSelect = (costumerSelected)=> {
   return {
     type: COSTUMERS_SELECT,
