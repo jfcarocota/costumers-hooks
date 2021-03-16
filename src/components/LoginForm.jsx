@@ -50,7 +50,7 @@ const LoginForm = () => {
 	const onPasswordChange = ({target}) => setPassword(target.value);
 
 	//	const checkLogin = ()=> dispatch(fetchLogin(email, password));
-	const checkLogin = ()=> dispatch(fetchLoginRequest());
+	const checkLogin = ()=> dispatch(fetchLoginRequest(email, password));
 
 	/*if (loading) return (
 		<Container component="main" maxWidth="xs">

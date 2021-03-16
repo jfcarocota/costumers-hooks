@@ -39,9 +39,13 @@ export const tryLogin = (token) => {
   }
 }
 
-export const fetchLoginRequest = ()=> {
+export const fetchLoginRequest = (email, password)=> {
   return {
-    type: FETCH_lOGIN_REQUEST
+    type: FETCH_lOGIN_REQUEST,
+    payload: {
+      email,
+      password
+    }
   }
 }
 
