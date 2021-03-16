@@ -2,7 +2,7 @@ import {
   FETCH_lOGIN_REQUEST,
   FETCH_lOGIN_SUCESS,
   FETCH_lOGIN_FAILURE,
-  LOGIN_SUCESS,
+  TRY_LOGIN,
   LOGOUT
 } from "./authTypes"
 
@@ -14,10 +14,10 @@ const initialState = {
 
 const authReducer = (state = initialState, {type, payload}) => {
   switch(type){
-    case LOGIN_SUCESS:
+    case TRY_LOGIN:
       return {
         ...state,
-        authenticated: true
+        loading: true
       }
     case LOGOUT:
       return {

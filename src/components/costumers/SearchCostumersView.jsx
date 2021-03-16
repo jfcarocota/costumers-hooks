@@ -14,14 +14,14 @@ const SearchCostumersView = ()=> {
   const [filter, setFilter] = useState('');
 
   const resultSelect = (e, data) => {
-    dispatch(costumerSelect(data.result.id));
+    //dispatch(costumerSelect(data.result.id));
     history.push('/costumer');
   }
 
   const searchChange = (e, {value}) => setFilter(value);
 
   useEffect(()=> {
-    dispatch(fetchCostumersSearch(filter));
+    //dispatch(fetchCostumersSearch(filter));
   }, [filter, dispatch]);
 
   return (
@@ -30,12 +30,12 @@ const SearchCostumersView = ()=> {
       fluid
       size='massive'
       style={{paddingTop: window.innerHeight / 4 }}
-      onSearchChange={searchChange}
+      //onSearchChange={searchChange}
       results={costumersResults}
       value={filter}
       //loading={loading}
       placeholder='nombre, correo, teléfono ...'
-      onResultSelect={resultSelect}
+      //onResultSelect={resultSelect}
       />
       <Divider hidden/>
       <Button variant="outlined" color="primary">

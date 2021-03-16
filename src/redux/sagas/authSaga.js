@@ -1,13 +1,18 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
-import { FETCH_lOGIN_REQUEST } from "../auth/authTypes";
-import axios from "axios";
+import {
+  FETCH_lOGIN_REQUEST
+} from "../auth/authTypes";
 import { authCall } from "../api/apiCall";
+import { fetchLoginSucess, fetchLoginFailure } from '../auth/authActions';
 
 function* loginRequest({payload}){
   try{
-    //console.log(payload);
-    const token = yield call(authCall, payload.email, payload.password);
-    console.log(token);
+    const session = yield call(authCall, payload.email, payload.password);
+    if(session){
+      yield put(fetchLoginSucess(session));
+    }else{
+      yield put(fetchLoginFailure());
+    }
   }catch(error){
     console.log(error);
   }

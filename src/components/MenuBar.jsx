@@ -7,7 +7,7 @@ import {
 	Fade
 } from '@material-ui/core';
 import { useDispatch} from 'react-redux';
-import { tryLogout } from "../redux";
+import { logout } from "../redux";
 
 const MenuBar = ()=> {
 
@@ -25,7 +25,7 @@ const MenuBar = ()=> {
 
 	const handleLogOut = ()=> {
 		setAnchorEl(null);
-		dispatch(tryLogout())
+		dispatch(logout())
 	}
 
 	return (
