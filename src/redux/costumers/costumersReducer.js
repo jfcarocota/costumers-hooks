@@ -1,5 +1,4 @@
 import {
-  COSTUMERS_TRY_RESULTS,
   COSTUMERS_SELECT,
   COSTUMERS_FETCH_SUCESS,
   COSTUMERS_FETCH_RESULTS,
@@ -20,11 +19,6 @@ const costumersReducer = (state = initialState, {type, payload}) => {
         loading: true
       }
     case COSTUMERS_FETCH_SUCESS:
-      return {
-        ...state,
-        costumersResults: payload.costumersResults
-      }
-    case COSTUMERS_TRY_RESULTS:
       return {
         ...state,
         costumersResults: payload.costumersResults

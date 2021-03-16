@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Divider, Search } from 'semantic-ui-react';
-import { GET_COSTUMERS_OPTIONS } from "../../graphql/queries";
 import Button from '@material-ui/core/Button';
-import { useLazyQuery } from "@apollo/client";
 import { useDispatch, useSelector } from "react-redux";
-import { tryCostumersResults, costumerSelect, fetchCostumersSearch } from "../../redux";
+import { costumerSelect, fetchCostumersSearch } from "../../redux";
 import { useHistory } from "react-router-dom";
 
 const SearchCostumersView = ()=> {

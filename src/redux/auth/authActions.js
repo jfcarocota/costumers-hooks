@@ -39,7 +39,7 @@ export const tryLogin = (token) => {
   }
 }
 
-const fetchLoginRequest = ()=> {
+export const fetchLoginRequest = ()=> {
   return {
     type: FETCH_lOGIN_REQUEST
   }
@@ -57,7 +57,7 @@ const fetchLoginFailure = () => {
   }
 }
 
-export const fetchLogin = (email, password)=> {
+/*export const fetchLogin = (email, password)=> {
   return dispatch =>{
     dispatch(fetchLoginRequest());
     axios.post(process.env.REACT_APP_API_URL, {
@@ -93,4 +93,4 @@ export const fetchLogin = (email, password)=> {
       console.log(error);
     });
   }
-}
+}*/

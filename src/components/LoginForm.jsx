@@ -11,7 +11,7 @@ import {
 import Alert from '@material-ui/lab/Alert';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { fetchLogin } from '../redux';
+import { fetchLoginRequest } from '../redux';
 import {useDispatch, useSelector} from 'react-redux';
 
 
@@ -49,7 +49,8 @@ const LoginForm = () => {
 
 	const onPasswordChange = ({target}) => setPassword(target.value);
 
-	const checkLogin = ()=> dispatch(fetchLogin(email, password));
+	//	const checkLogin = ()=> dispatch(fetchLogin(email, password));
+	const checkLogin = ()=> dispatch(fetchLoginRequest());
 
 	/*if (loading) return (
 		<Container component="main" maxWidth="xs">

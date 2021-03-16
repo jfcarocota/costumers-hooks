@@ -1,5 +1,4 @@
 import {
-  COSTUMERS_TRY_RESULTS,
   COSTUMERS_SELECT,
   COSTUMERS_FETCH_RESULTS,
   COSTUMERS_FETCH_SUCESS,
@@ -18,7 +17,7 @@ export const costumerSelect = (costumerSelected)=> {
   }
 }
 
-const costumerFetchResults = ()=> {
+export const costumerFetchResults = ()=> {
   return {
     type: COSTUMERS_FETCH_RESULTS
   }
