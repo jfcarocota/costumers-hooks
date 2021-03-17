@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Divider, Search } from 'semantic-ui-react';
 import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from "react-redux";
-import { costumerSelect, fetchCostumersSearch } from "../../redux";
+import { costumerSelect, costumerFetchResults } from "../../redux";
 import { useHistory } from "react-router-dom";
 
 const SearchCostumersView = ()=> {
@@ -21,7 +21,7 @@ const SearchCostumersView = ()=> {
   const searchChange = (e, {value}) => setFilter(value);
 
   useEffect(()=> {
-    //dispatch(fetchCostumersSearch(filter));
+    dispatch(costumerFetchResults(filter));
   }, [filter, dispatch]);
 
   return (
@@ -30,7 +30,7 @@ const SearchCostumersView = ()=> {
       fluid
       size='massive'
       style={{paddingTop: window.innerHeight / 4 }}
-      //onSearchChange={searchChange}
+      onSearchChange={searchChange}
       results={costumersResults}
       value={filter}
       //loading={loading}
