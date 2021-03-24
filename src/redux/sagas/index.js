@@ -8,6 +8,7 @@ function* rootSaga(){
   yield all([
     //costumersSaga(),
     serachCostumersSaga(),
+    costumersSaga(),
     authSaga(),
     sessionSaga()
   ]);

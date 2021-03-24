@@ -1,16 +1,18 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
-import { COSTUMERS_FETCH_RESULTS } from "../costumers/costumersType";
+import { COSTUMER_START_FETCH } from "../costumers/costumersType";
+import { costumerInfoResultCall } from "../api/apiCall";
 
-function* getCostumersSearch({payload}){
+function* getCostumer({payload}){
   try{
-    console.log('im listening');
+    const costumer = yield call(costumerInfoResultCall, payload.id);
+    console.log(costumer);
   }catch(error){
     console.log(error);
   }
 }
 
 function* costumersSaga(){
-  yield takeLatest(COSTUMERS_FETCH_RESULTS, getCostumersSearch);
+  yield takeLatest(COSTUMER_START_FETCH, getCostumer);
 }
 
 export default costumersSaga;

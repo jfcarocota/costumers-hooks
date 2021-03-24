@@ -2,13 +2,19 @@ import {
   COSTUMERS_SELECT,
   COSTUMERS_FETCH_SUCESS,
   COSTUMERS_FETCH_RESULTS,
-  COSTUMERS_FETCH_FAILURE
+  COSTUMER_START_FETCH
 } from "./costumersType";
 
 const initialState = {
   loading: false,
   costumersResults: [],
-  costumerSelected: ''
+  costumerSelected: '',
+  costumerInfo: {
+    fullName: '',
+    phonNumber: '',
+    email: '',
+    packages:[]
+  }
 }
 
 const costumersReducer = (state = initialState, {type, payload}) => {
@@ -27,6 +33,13 @@ const costumersReducer = (state = initialState, {type, payload}) => {
       return {
         ...state,
         costumerSelected: payload.costumerSelected
+      }
+    case COSTUMER_START_FETCH:
+      return {
+        ...state,
+        fullName: payload.fullName,
+        phonNumber: payload.phonNumber,
+        email: payload.email
       }
     default: return state;
   }

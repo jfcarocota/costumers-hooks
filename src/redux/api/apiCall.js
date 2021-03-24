@@ -1,5 +1,5 @@
 import axios from "axios"
-import { AUTHENTICATE, GET_COSTUMERS_SEARCH } from "../../graphql/queries";
+import { AUTHENTICATE, GET_COSTUMERS_SEARCH, GET_COSTUMER_BY_ID } from "../../graphql/queries";
 import jwt from "jsonwebtoken";
 
 export const authCall = (email, password)=> (
@@ -51,4 +51,20 @@ axios.post(process.env.REACT_APP_API_URL, {
   })
 ))
 .catch(error => console.log(error))
+);
+
+export const costumerInfoResultCall =  id => (
+  axios.post(process.env.REACT_APP_API_URL, {
+    query: GET_COSTUMER_BY_ID,
+    variables: {
+      id
+    }
+  })
+  .then(({data}) => {
+    return data.data.costumer;
+
+  })
+  .catch(error => {
+    console.log(error);
+  })
 );

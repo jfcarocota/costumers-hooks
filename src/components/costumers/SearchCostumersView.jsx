@@ -14,7 +14,7 @@ const SearchCostumersView = ()=> {
   const [filter, setFilter] = useState('');
 
   const resultSelect = (e, data) => {
-    //dispatch(costumerSelect(data.result.id));
+    dispatch(costumerSelect(data.result.id));
     history.push('/costumer');
   }
 
@@ -35,7 +35,7 @@ const SearchCostumersView = ()=> {
       value={filter}
       //loading={loading}
       placeholder='nombre, correo, teléfono ...'
-      //onResultSelect={resultSelect}
+      onResultSelect={resultSelect}
       />
       <Divider hidden/>
       <Button variant="outlined" color="primary">
